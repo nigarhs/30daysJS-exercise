@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript for Everyone:DOM</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper"></div>
+    <script src="challenges_info.js"></script>
+    <script>
+      let wrapper = document.querySelector(".wrapper");
+      let descAndYear = document.createElement("div");
+      let description = document.createElement("span");
+      let yearText = document.createElement("span");
+      let text = document.createElement("p");
+      let myList = document.createElement("ul");
+      let dateElement = document.createElement("p");
+
+      setInterval(function () {
+        const timer = new Date();
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        let month = monthNames[timer.getMonth() + 1];
+
+        let date =
+          month +
+          " " +
+          timer.getDate() +
+          ", " +
+          timer.getFullYear() +
+          " " +
+          timer.getHours() +
+          ":" +
+          timer.getMinutes() +
+          ":" +
+          timer.getSeconds();
+
+        dateElement.innerText = date;
+      }, 1000);
+
+      descAndYear.appendChild(description);
+      descAndYear.appendChild(yearText);
+
+      yearText.innerText = asabenehChallenges2020.challengeYear;
+
+      description.innerText = asabenehChallenges2020.description + " in ";
+
+      text.innerText = asabenehChallenges2020.challengeSubtitle;
+
+      wrapper.appendChild(descAndYear);
+      wrapper.appendChild(text);
+      wrapper.appendChild(dateElement);
+      wrapper.appendChild(myList);
+
+      dateElement.style.margin = "auto";
+      dateElement.style.padding = "10px";
+      dateElement.style.marginBottom = "15px";
+      descAndYear.style.display = "flex";
+      descAndYear.style.alignItems = "center";
+      descAndYear.style.justifyContent = "center";
+
+      for (let i = 0; i < 8; i++) {
+        let myListElements = document.createElement("li");
+
+        let innerList = document.createElement("ul");
+
+        for (let j = 0; j < 3; j++) {
+          let innerListElements = document.createElement("li");
+          innerList.appendChild(innerListElements);
+
+          if (j === 0) {
+            let linkForName = document.createElement("a");
+
+            if (asabenehChallenges2020.challenges[i].githubUrl.length > 0) {
+              linkForName.setAttribute(
+                "href",
+                asabenehChallenges2020.challenges[i].githubUrl
+              );
+            }
+            linkForName.innerText = asabenehChallenges2020.challenges[i].name;
+
+            innerListElements.appendChild(linkForName);
+          } else if (j === 1) {
+            let details = document.createElement("details");
+            let summary = document.createElement("summary");
+            let topicArray = asabenehChallenges2020.challenges[i].topics;
+
+            details.appendChild(summary);
+
+            topicArray.forEach((topic) => {
+              let topicElement = document.createElement("p");
+              topicElement.innerText = topic;
+              summary.innerText =
+                asabenehChallenges2020.challenges[i].name.substring(11);
+              details.appendChild(topicElement);
+            });
+            innerListElements.appendChild(details);
+          } else if (j === 2) {
+            innerListElements.innerText =
+              asabenehChallenges2020.challenges[i].status;
+          }
+
+          innerListElements.style.listStyleType = "none";
+          innerList.style.display = "flex";
+          innerList.style.justifyContent = "space-between";
+        }
+
+        myListElements.appendChild(innerList);
+        myListElements.style.listStyleType = "none";
+        myListElements.style.marginBottom = "5px";
+        myListElements.style.padding = "30px";
+
+        if (i == 0) {
+          myListElements.style.backgroundColor = "green";
+        } else if (i == 1) {
+          myListElements.style.backgroundColor = "yellow";
+        } else {
+          myListElements.style.backgroundColor = "red";
+        }
+
+        myList.appendChild(myListElements);
+      }
+
+      wrapper.style.display = "flex";
+      wrapper.style.flexDirection = "column";
+      wrapper.style.textAlign = "center";
+      description.style.fontSize = "30px";
+      description.style.fontWeight = "bold";
+      text.style.fontSize = "20px";
+      text.style.textDecoration = "underLine";
+      yearText.style.fontWeight = "bold";
+      yearText.style.fontSize = "70px";
+      myList.style.margin = "auto";
+      myList.style.width = "830px";
+
+      colorListYear = ["yellow", "blue", "purple", "gray", "green"];
+
+      let index = 0;
+
+      setInterval(function () {
+        yearText.style.color = colorListYear[index];
+        index = (index + 1) % colorListYear.length;
+      }, 1000);
+
+      colorListDate = [
+        "deepPink",
+        "blueViolet",
+        "darkRed",
+        "coral",
+        "darkBlue",
+      ];
+
+      setInterval(function () {
+        dateElement.style.backgroundColor = colorListDate[index];
+        index = (index + 1) % colorListDate.length;
+      }, 1000);
+
+      let nameSurname = document.createElement("h1");
+
+      nameSurname.innerText =
+        asabenehChallenges2020.author.firstName +
+        " " +
+        asabenehChallenges2020.author.lastName;
+
+      wrapper.appendChild(nameSurname);
+
+      let socials = document.createElement("ul");
+
+      for (i = 0; i < 3; i++) {
+        let socialElements = document.createElement("li");
+
+        let socialsLink = document.createElement("a");
+
+        socialsLink.setAttribute(
+          "href",
+          asabenehChallenges2020.author.socialLinks[i].url
+        );
+
+        socialsLink.innerHTML =
+          asabenehChallenges2020.author.socialLinks[i].fontawesomeIcon;
+
+        socialElements.style.listStyleType = "none";
+        socials.style.display = "flex";
+        socials.style.justifyContent = "center";
+        socialElements.style.paddingRight = "10px";
+
+        socialElements.appendChild(socialsLink);
+        socials.append(socialElements);
+      }
+
+      wrapper.appendChild(socials);
+
+      let bio = document.createElement("span");
+
+      bio.innerText = asabenehChallenges2020.author.bio;
+
+      // bio.style.maxWidth = myList.clientWidth + 'px';
+
+      wrapper.appendChild(bio);
+
+      let titlesList = document.createElement("ul");
+
+      let skillsList = document.createElement("ul");
+
+      let qualificationsList = document.createElement("ul");
+
+      let mainTitlesText = document.createElement("li");
+      mainTitlesText.textContent = "Titles";
+      mainTitlesText.style.fontWeight = "bold";
+      mainTitlesText.style.fontSize = "20px";
+      titlesList.append(mainTitlesText);
+
+      let mainSkillsText = document.createElement("li");
+      mainSkillsText.textContent = "Skills";
+      mainSkillsText.style.fontWeight = "bold";
+      mainSkillsText.style.fontSize = "20px";
+      skillsList.append(mainSkillsText);
+
+      let mainQualificationsText = document.createElement("li");
+      mainQualificationsText.textContent = "Qualifications";
+      mainQualificationsText.style.fontWeight = "bold";
+      mainQualificationsText.style.fontSize = "20px";
+      qualificationsList.append(mainQualificationsText);
+
+      for (i = 0; i < asabenehChallenges2020.author.titles.length; i++) {
+        let titlesListElements = document.createElement("li");
+
+        let titlesEmoji = document.createElement("span");
+        titlesEmoji.innerHTML = asabenehChallenges2020.author.titles[i][0];
+        titlesListElements.appendChild(titlesEmoji);
+
+        titlesListElements.innerHTML += ` ${asabenehChallenges2020.author.titles[i][1]}`;
+
+        titlesList.appendChild(titlesListElements);
+      }
+
+      for (i = 0; i < asabenehChallenges2020.author.skills.length - 1; i++) {
+        let skillsListElements = document.createElement("li");
+
+        let skillsEmoji = document.createElement("span");
+        skillsEmoji.innerHTML = asabenehChallenges2020.author.skills[0];
+        skillsListElements.appendChild(skillsEmoji);
+
+        skillsListElements.innerHTML += ` ${
+          asabenehChallenges2020.author.skills[i + 1]
+        }`;
+        skillsList.appendChild(skillsListElements);
+      }
+
+      for (
+        i = 0;
+        i < asabenehChallenges2020.author.qualifications.length;
+        i++
+      ) {
+        let qualificationsListElements = document.createElement("li");
+
+        let qualificationsEmoji = document.createElement("span");
+        qualificationsEmoji.innerHTML =
+          asabenehChallenges2020.author.qualifications[i][0];
+        qualificationsListElements.appendChild(qualificationsEmoji);
+
+        qualificationsListElements.innerHTML += ` ${asabenehChallenges2020.author.qualifications[i][1]}`;
+
+        qualificationsList.appendChild(qualificationsListElements);
+      }
+
+      let aboutAuthorList = document.createElement("ul");
+
+      titlesList.style.listStyleType = "none";
+      titlesList.style.display = "flex";
+      titlesList.style.flexDirection = "column";
+      titlesList.style.alignItems = "flex-start";
+
+      skillsList.style.listStyleType = "none";
+      skillsList.style.display = "flex";
+      skillsList.style.flexDirection = "column";
+      skillsList.style.alignItems = "flex-start";
+
+      qualificationsList.style.listStyleType = "none";
+      qualificationsList.style.display = "flex";
+      qualificationsList.style.flexDirection = "column";
+      qualificationsList.style.alignItems = "flex-start";
+
+      aboutAuthorList.style.display = "flex";
+      aboutAuthorList.style.justifyContent = "center";
+
+      aboutAuthorList.appendChild(titlesList);
+      aboutAuthorList.appendChild(skillsList);
+      aboutAuthorList.appendChild(qualificationsList);
+      wrapper.appendChild(aboutAuthorList);
+
+      let keywordSection = document.createElement('div')
+
+      let keywordText = document.createElement("p");
+      keywordText.innerText = "Keywords";
+      keywordText.style.fontWeight = "bold";
+      keywordText.style.fontSize = "20px";
+      keywordText.style.textAlign = "center";
+
+      keywordSection.appendChild(keywordText);
+
+      let keywords = asabenehChallenges2020.keywords
+      
+      let allKeywords = document.createElement('div')
+      keywords.forEach((keyword) => {
+        let keywordElement = document.createElement('span')
+        keywordElement.innerText = ` ${'#'+keyword}`;
+        keywordElement.style.padding = '5px 10px'
+        keywordElement.style.marginRight = '10px'
+        keywordElement.style.marginBottom = '5px'
+        keywordElement.style.borderRadius = '40%'
+        keywordElement.style.backgroundColor = getRandomColor()
+        allKeywords.appendChild(keywordElement)
+      });
+
+      allKeywords.style.display='flex'
+      allKeywords.style.alignItems='center'
+      allKeywords.style.flexWrap='wrap'
+      allKeywords.style.maxWidth='500px'
+      allKeywords.style.margin='auto'
+
+      keywordSection.appendChild(allKeywords)
+      wrapper.appendChild(keywordSection)
+
+      function getRandomColor() {
+          var letters = "0123456789ABCDEF";
+          var color = "#";
+          for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+             return color
+        }
+    </script>
+  </body>
+</html>
